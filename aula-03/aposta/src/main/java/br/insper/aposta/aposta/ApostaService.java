@@ -25,8 +25,13 @@ public class ApostaService {
                 RetornarPartidaDTO.class);
 
         if (partida.getStatusCode().is2xxSuccessful())  {
-            aposta.setStatus("REALIZADA");
-            apostaRepository.save(aposta);
+            if(Objects.equals(partida.getBody().getStatus(), "AGENDADA")) {
+                aposta.setStatus("REALIZADA");
+                apostaRepository.save(aposta);
+            }
+            else{
+                throw new ApostaNaoRealizada("Partida já realizada");
+            }
         }
 
     }
@@ -67,7 +72,10 @@ public class ApostaService {
         return null;
     }
 
-    public List<Aposta> listar() {
+    public List<Aposta> listar(String status) {
+        if (status != null) {
+            return apostaRepository.findByStatus(status);
+        }
         return apostaRepository.findAll();
     }
 
