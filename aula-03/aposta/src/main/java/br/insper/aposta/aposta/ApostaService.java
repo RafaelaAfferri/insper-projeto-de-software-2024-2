@@ -25,6 +25,7 @@ public class ApostaService {
                 RetornarPartidaDTO.class);
 
         if (partida.getStatusCode().is2xxSuccessful())  {
+            aposta.setStatus("REALIZADA");
             apostaRepository.save(aposta);
         }
 
