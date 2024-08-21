@@ -21,4 +21,9 @@ public class ApostaController {
     public void salvar(@RequestBody Aposta aposta) {
         apostaService.salvar(aposta);
     }
+
+    @GetMapping("/{id}")
+    public Aposta checar(@PathVariable String id) {
+        return apostaService.checar(id);
+    }
 }
