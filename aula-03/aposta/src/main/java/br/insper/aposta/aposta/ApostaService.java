@@ -25,6 +25,7 @@ public class ApostaService {
                 RetornarPartidaDTO.class);
 
         if (partida.getStatusCode().is2xxSuccessful())  {
+
             if(Objects.equals(partida.getBody().getStatus(), "AGENDADA")) {
                 aposta.setStatus("REALIZADA");
                 apostaRepository.save(aposta);
@@ -32,6 +33,9 @@ public class ApostaService {
             else{
                 throw new ApostaNaoRealizada("Partida já realizada");
             }
+        }else{
+            throw new ApostaNaoRealizada("Partida não encontrada");
+
         }
 
     }
