@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 public class TimeServiceTests {
@@ -38,7 +39,7 @@ public class TimeServiceTests {
 
     @Test
     public void testListarTimesWhenEstadoIsNotNull() {
-
+        // preparacao
         List<Time> lista = new ArrayList<>();
 
         Time time = new Time();
@@ -46,7 +47,6 @@ public class TimeServiceTests {
         time.setIdentificador("time-1");
         lista.add(time);
 
-        // preparacao
         Mockito.when(timeRepository.findByEstado("SP")).thenReturn(lista);
 
         // chamada do codigo testado
@@ -56,6 +56,23 @@ public class TimeServiceTests {
         Assertions.assertTrue(times.size() == 1);
         Assertions.assertEquals("SP", times.getFirst().getEstado());
         Assertions.assertEquals("time-1", times.getFirst().getIdentificador());
+    }
+
+    @Test
+    public void testGetTimeWhenTimeNotNull(){
+        Time time = new Time();
+        time.setEstado("SP");
+        time.setIdentificador("time-1");
+
+        Mockito.when(timeRepository.findById(1)).thenReturn(Optional.of(time));
+
+
+        Time timeRetorno = timeService.getTime(1);
+
+        Assertions.assertNotNull(timeRetorno);
+        Assertions.assertEquals("SP", timeRetorno.getEstado());
+        Assertions.assertEquals("time-1", timeRetorno.getIdentificador());
+
     }
 
 
