@@ -6,6 +6,8 @@ import './App.css'
 import { useKeycloak } from '@react-keycloak/web';
 import { Link, Route, Routes } from 'react-router-dom';
 import ListaTime from './time/ListaTime';
+import ListaAposta from './aposta/ListaAposta';
+
 
 function App() {
   const { keycloak, initialized } = useKeycloak();
@@ -27,6 +29,9 @@ function App() {
           <div>
             <Link to='/listaTimes'>Listar Times</Link>
           </div>
+          <div>
+            <Link to='/listaAposta'>Listar Apostas</Link>
+          </div>
           <div>  
             <button onClick={handleLogout}>Logout</button>
           </div>
@@ -37,6 +42,11 @@ function App() {
         <Routes>
           <Route path='/listaTimes' element={<ListaTime />} />
         </Routes>
+        <Routes>
+          <Route path='/listaAposta' element={<ListaAposta />} />
+        </Routes>
+        
+        
       </div>
 
     ) : (
